@@ -3,11 +3,24 @@ import plotly.express as px
 from taipy.gui import Gui
 import taipy.gui.builder as tgb
 from pathlib import Path
+#from utils.constants import DATA_DIRECTORY
+
+
+
+
 
 # === 1. Load and transform data ===
 DATA_DIRECTORY = Path(__file__).parents[2] / "files"
 df = pd.read_csv(DATA_DIRECTORY / "beviljade_platser_full_2019_2024.csv", sep=",", encoding="utf-8-sig")
 df.columns = df.columns.str.strip()
+
+df_2024 = pd.read_excel(
+    DATA_DIRECTORY / "2024_tabell3.xlsx",
+    sheet_name="Tabell 3",
+    skiprows=5,
+)
+
+
 
 long_df = df.melt(id_vars="Utbildningsområde", var_name="År", value_name="Beviljade")
 long_df["År"] = long_df["År"].astype(int)
@@ -86,11 +99,16 @@ with tgb.Page() as page:
                     width="90%"
                 )
 
+        #with tgb.part(class_name="card"):
+         #   tgb.text("## Rådata för alla utbildningsområden", mode="md")
+          #  for utb in utb_list:
+           #     tgb.text(f"### {utb}", mode="md")
+               # tgb.table(f"{{all_tables['{utb}']}}")
+
         with tgb.part(class_name="card"):
-            tgb.text("## Rådata för alla utbildningsområden", mode="md")
-            for utb in utb_list:
-                tgb.text(f"### {utb}", mode="md")
-                tgb.table(f"{{all_tables['{utb}']}}")
+
+            tgb.text("## Rådata", mode="md")
+            tgb.table("{df_2024}")
 
 # === 8. Run GUI
 Gui(page).run(dark_mode=False, use_reloader=True, port=8050)
