@@ -6,6 +6,7 @@ import plotly.express as px
 
 
 
+
 # === 1. Load and transform data ===
 DATA_DIRECTORY = Path(__file__).parents[1] / "files"
 df = pd.read_csv(DATA_DIRECTORY / "beviljade_platser_full_2019_2024.csv", sep=",", encoding="utf-8-sig")
