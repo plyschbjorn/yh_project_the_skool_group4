@@ -2,9 +2,10 @@ import pandas as pd
 from taipy.gui import Gui
 import taipy.gui.builder as tgb
 from pathlib import Path
+from backend.data_processing import df_filter_kön
 
 # Load Excel
-DATA_DIRECTORY = Path(__file__).parents[2] / "files"
+DATA_DIRECTORY = Path(__file__).parents[1] / "files"
 df = pd.read_excel(DATA_DIRECTORY / "kön.xlsx", decimal=",")
 
 # Clean numbers
@@ -14,14 +15,6 @@ for col in cols_to_clean:
     df_clean[col] = df_clean[col].astype(str).str.replace(u'\xa0', '', regex=False)
     df_clean[col] = df_clean[col].str.replace(',', '.', regex=False)
     df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
-
-
-
-query=df.query(""" 
-         SELECT *
-         FROM df_clean
-         """)
-print(query)
 
 # Extract indicators & years
 years = list(map(str, df_clean.columns[1:]))
@@ -52,6 +45,7 @@ def show_gender_distribution(indicator: str, year: str):
 
     return f"{indicator} år {year}:\n- 👩 Kvinnor: {women}%\n- 👨 Män: {men}%"
 
+
 # Button logic
 def filter_data(state):
     try:
@@ -59,24 +53,7 @@ def filter_data(state):
     except Exception as e:
         state.filtered_value = f"Fel: {e}"
 
-# Prepare bar chart for 'Antal studerande' (only women)
-target_indicator = "Antal studerande"
-target_idx = df_clean[df_clean["Unnamed: 0"] == target_indicator].index[0]
-x_values = years[:17]
-y_values = [float(val) if pd.notna(val) else 0 for val in df_clean.iloc[target_idx + 1][1:18]]
-
-bar_chart_data = [
-    {
-        "x": x_values,
-        "y": y_values,
-        "type": "bar",
-        "name": "👩 Kvinnor"
-    }
-]
-
-
-
-# GUI layout
+# GUI page layout (like your working version)
 with tgb.Page() as page:
     with tgb.part(class_name="container card"):
         tgb.text("## Analys av könsbaserade utbildningsindikatorer i YH (2007–2024)", mode="md")
@@ -99,17 +76,5 @@ with tgb.Page() as page:
 
         tgb.text("**Resultat:** {filtered_value}", mode="md")
 
-        tgb.chart("{bar_chart_data}")
-
-
-# GUI state variables
-
-Gui(page).run(dark_mode=False, use_reloader=True, port=8060, state={
-    "selected_year": selected_year,
-    "selected_indicator": selected_indicator,
-    "filtered_value": filtered_value,
-    "bar_chart_data": bar_chart_data
-})
-
-
-
+# Run GUI
+Gui(page).run(dark_mode=False, use_reloader=True, port=8060)
