@@ -3,6 +3,7 @@ from pathlib import Path
 from taipy.gui import Gui
 
 
+
 PROJECT_ROOT = Path(r"C:\Users\azizm\Documents\github\yh_project_the_skool_group4")
 FILES_DIR = PROJECT_ROOT / "files"
 DATA_DIR = PROJECT_ROOT / "EDA_filer" / "Data"
