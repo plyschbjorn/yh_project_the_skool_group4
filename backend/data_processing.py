@@ -2,6 +2,8 @@ from pathlib import Path
 import pandas as pd  
 from utils.constants import DATA_DIRECTORY
 import plotly.express as px
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 
 
@@ -81,29 +83,67 @@ def generate_chart(utb):
 
 def filter_df_indicator(df_kön, indicator="Antal studerande"):
     return df_kön.query("Indicator == @indicator").reset_index()
-
 df_antal_studerande = filter_df_indicator(df_kön) 
-def create_indicator_bar(df_kön, **options):
-    fig = px.bar(df_kön, y="Year", x="Value", orientation="h", color_discrete_sequence=["#1f77b4"], text="Value",)
-    fig.update_layout(
-        
-        yaxis=dict(linecolor="lightgray", linewidth=2, showline=True, title=dict(text=f"<b>{options.get('xlabel')}</b>")),
-        xaxis=dict(
-            title = dict(text=f"<b>{options.get('ylabel')}</b>")),
-        height=600,
-        width=800, 
-        plot_bgcolor="rgba(0,0,0,0)"
-        
-    )
-    fig.update_traces(
-        texttemplate="%{x}",
-        textposition="outside",
-        marker=dict(line=dict(color="white", width=1)),
-        hovertemplate="<b>%{x}</b> studerande<br>%{y}",
-        textfont_size=10
-    )
-    return fig
+def create_indicator_bar_image(df_kön, **options):
+    fig, ax = plt.subplots(figsize=(8, 5))
 
+
+
+
+    bars = ax.barh(df_kön["Year"], df_kön["Value"], color="#A5B9E6", edgecolor="white")
+
+
+    ax.set_title("Ökande efterfrågan på yrkesutbildning(En tydlig tillväxttrend i YH-studier 2007–2024)", fontsize=13,loc="left", fontweight="bold", fontstyle="italic")
+    ax.set_xlabel(options.get("ylabel", "Antal studerande"), fontsize=11, fontstyle="italic", labelpad=10)
+    ax.set_ylabel(options.get("xlabel", "År"), fontsize=11, fontstyle="italic")
+    ax.spines[["top", "right"]].set_visible(False) 
+    ax.spines[["left", "bottom"]].set_linewidth(1.5)
+    ax.spines[["left", "bottom"]].set_color("lightgray") 
+
+
+    ax.annotate("", xy=(df_kön["Value"].iloc[-1], df_kön["Year"].iloc[-1]),    
+        xytext=(df_kön["Value"].iloc[0]+50, df_kön["Year"].iloc[0]),
+        textcoords='data',   
+        arrowprops=dict(
+            arrowstyle="->",
+            color="darkblue",
+            lw=1.5,
+            connectionstyle="arc3,rad=-0.15",
+             linestyle="dashed"
+        ),
+        fontsize=9,
+        color="gray",
+        ha="left",
+        va="center"
+    )
+      
+    ax.text(
+        x=(df_kön["Value"].iloc[0] + df_kön["Value"].iloc[-1]) / 2.2,  
+        y=(df_kön["Year"].iloc[0] + df_kön["Year"].iloc[-1]) / 2 - 0.009,        
+        s="Fler studerande",
+        fontsize=10,
+        color="gray",
+        rotation=40 
+    )
+
+
+    plt.figtext(0.5, -0.05, "Källa: Statistiska centralbyrån (SCB)", ha="center", fontsize=10, color="gray")
+    ax.set_yticks(df_kön["Year"])
+    ax.set_yticklabels(df_kön["Year"].astype(int))
+    ax.tick_params(left=False, bottom=False)
+    ax.tick_params(axis='y', labelsize=9, labelcolor="gray")
+    ax.tick_params(axis='x', labelsize=10, labelcolor="gray")
+    formatter = FuncFormatter(lambda x, pos: f"{int(x/1000)}K")
+    ax.xaxis.set_major_formatter(formatter)
+    plt.tight_layout()
+
+    pathpng = Path(__file__).parents[1] / "public" / "bar_chart.png"
+    
+
+    
+    plt.savefig(pathpng, bbox_inches="tight")
+    plt.close()
+    return str(pathpng)
 
 
 #filter women men
@@ -157,7 +197,7 @@ def show_gender_distribution(indicator: str, year: str):
 
 
 
+
 # === 5. Initial chart
 chart_fig = generate_chart(selected_field)
-bar_chart = create_indicator_bar(df_antal_studerande , ylabel="Antal studerande", xlabel="År")
-
+bar_chart_image = create_indicator_bar_image(df_antal_studerande)

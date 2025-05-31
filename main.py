@@ -4,6 +4,8 @@ from taipy.gui import Gui
 from frontend.pages.data import data_page
 from frontend.pages.home import home_page
 from frontend.pages.dashboard import dashboard_page
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 
 

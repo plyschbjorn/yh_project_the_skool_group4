@@ -1,10 +1,12 @@
 import taipy.gui.builder as tgb
-from backend.data_processing import  long_df, utb_list, df_2024 , chart_fig, selected_field, bar_chart, mainindic, året
+from backend.data_processing import  long_df, utb_list, df_2024 , chart_fig, selected_field, mainindic, året
 from backend.updates import update_chart , filter_data
 from backend.data_processing import filtered_value
 from taipy.gui.builder import page
 from taipy.gui import Gui
 from backend.data_processing import selected_indicator, selected_year
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 
 
@@ -54,13 +56,12 @@ with tgb.Page() as dashboard_page:
                 tgb.button(" Filtrera", on_action=filter_data)
 
                 tgb.text("**Resultat:** {filtered_value}", mode="md")
+             
             with tgb.part(class_name="card") as column_chart_bar:
                 tgb.text("## Antal studerande över tid", mode="md")
-                tgb.chart(figure="{bar_chart}", mode="plotly")
-            #with tgb.Page() as page:
-             #with tgb.part(class_name="container card"):
-              #    tgb.text("## Analys av könsbaserade utbildningsindikatorer i YH (2007–2024)", mode="md")
-                  
+                tgb.image("public/bar_chart.png", width="100%", height="600px")
+
+
  
     __all__ = ["dashboard_page"]
 
