@@ -45,7 +45,7 @@ with tgb.Page() as ansökningar:
             tgb.text("# Ansökningsomgång för kurser", class_name="center-text bold", mode="md")
             tgb.selector("{selected_year}", lov=["2024", "2023", "2022"], dropdown=True, on_change=update_year)
             with tgb.part(class_name="container"):
-                with tgb.layout(columns="1fr 1fr 1fr 1fr"):
+                with tgb.layout(columns="1fr 1fr 1fr 1fr 1fr"):
                     tgb.text("Beviljade kurser: {antal_kurser}")
                     tgb.text("Anordnare: {antal_anordnare}")
                     tgb.text("Utbildningsområden: {antal_utbildningsområden}")
@@ -55,6 +55,10 @@ with tgb.Page() as ansökningar:
             tgb.text("## Lista över skolor med högst andel beviljade kurser ({selected_year})", mode="md", class_name="bold")
             tgb.text("Tabellen är sorterad efter antal beviljade kurser och beviljandegrad i %", class_name="italic small")
             tgb.table("{df_course}", page_size=10)
+
+            with tgb.part(class_name="card") as column_chart_bar:
+                tgb.text("## Antal beviljade kurser per utbildningsområde och år ", mode="md")
+                tgb.image("public/beviljade_kurser_per_utbildningsområde.png", width="95%", height="600px")
 
 gui_data = {
     "selected_year": selected_year,
@@ -67,3 +71,7 @@ gui_data = {
     "fig_pie": fig_pie,
     
 }
+
+with tgb.part(class_name="card") as column_chart_bar:
+    tgb.text("## Antal beviljade kurser per utbildningsområde och år ", mode="md")
+    tgb.image("public/beviljade_kurser_per_utbildningsområde.png", width="100%", height="600px")
