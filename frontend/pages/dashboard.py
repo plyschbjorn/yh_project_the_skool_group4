@@ -37,7 +37,7 @@ with tgb.Page() as dashboard_page:
                 # GUI page layout (like your working version)
 
 
-                tgb.text("## KPI : Analys av könsbaserade utbildningsindikatorer i YH (2007–2024)", mode="md")
+                tgb.text("## Analys av könsbaserade utbildningsindikatorer i YH (2007–2024)", mode="md")
 
                 tgb.selector(
                     value="{selected_year}",
