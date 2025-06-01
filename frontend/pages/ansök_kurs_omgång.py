@@ -39,8 +39,9 @@ def update_year(state):
     state.fig_pie = fig_pie
 
 with tgb.Page() as ansökningar:
-    with tgb.part(class_name="container card"):
-        tgb.navbar()
+    with tgb.part(class_name="container card stack-large"):
+        with tgb.part(class_name="container card"):
+            tgb.navbar()
         with tgb.part(class_name="card"):
             tgb.text("# Ansökningsomgång för kurser", class_name="center-text bold", mode="md")
             tgb.selector("{selected_year}", lov=["2024", "2023", "2022"], dropdown=True, on_change=update_year)

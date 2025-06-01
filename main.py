@@ -4,9 +4,11 @@ from frontend.pages.home import home_page
 from frontend.pages.dashboard import dashboard_page
 from frontend.pages.ansök_kurs_omgång import ansökningar
 from frontend.pages.map import map_page, beviljade_df, choropleth_chart, selected_year
+from frontend.pages.kpi import kpi_page
+from frontend.pages.extra import extra_page
 
 pages = {
-    "home": home_page, "studerande": dashboard_page, "kurser": ansökningar, "karta": map_page, "data": data_page
+    "home": home_page, "studerande": dashboard_page, "kurser": ansökningar, "karta": map_page, "kpi": kpi_page, "data": data_page, "_": extra_page
 }       
 
 if __name__ == "__main__":
