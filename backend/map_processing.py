@@ -5,6 +5,10 @@ import json
 from difflib import get_close_matches
 from utils.constants import DATA_DIRECTORY, ASSETS_DIRECTORY
 
+kurs_2022 = pd.read_excel(DATA_DIRECTORY / "resultat-2022-for-kurser-inom-yh.xlsx")
+kurs_2023 = pd.read_excel(DATA_DIRECTORY / "resultat-2023-for-kurser-inom-yh.xlsx")
+kurs_2024 = pd.read_excel(DATA_DIRECTORY / "resultat-2024-for-kurser-inom-yh.xlsx")
+
 with open(ASSETS_DIRECTORY / "swedish_regions.geojson", "r") as file:
     geojson_data = json.load(file)
 
