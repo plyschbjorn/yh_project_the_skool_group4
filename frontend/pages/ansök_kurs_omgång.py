@@ -58,7 +58,7 @@ with tgb.Page() as ansökningar:
 
             with tgb.part(class_name="card") as column_chart_bar:
                 tgb.text("## Antal beviljade kurser per utbildningsområde och år ", mode="md")
-                tgb.image("public/beviljade_kurser_per_utbildningsområde.png", width="95%", height="600px")
+                tgb.image("public/chart_course.png", width="95%", height="600px")
 
 gui_data = {
     "selected_year": selected_year,
