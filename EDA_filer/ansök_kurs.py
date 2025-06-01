@@ -119,19 +119,19 @@ with tgb.Page() as ansökningar:
             with tgb.part(class_name="container"):
                 with tgb.layout(columns="1fr 1fr 1fr 1fr"):
                     with tgb.part(class_name="kpi-card blue"):
-                        tgb.text("✅ Beviljade kurser", class_name="kpi-label")
+                        tgb.text("Beviljade kurser", class_name="kpi-label")
                         tgb.text("{antal_kurser}", class_name="kpi-value")
 
                     with tgb.part(class_name="kpi-card green"):
-                        tgb.text("👥 Anordnare", class_name="kpi-label")
+                        tgb.text("Anordnare", class_name="kpi-label")
                         tgb.text("{antal_anordnare}", class_name="kpi-value")
 
                     with tgb.part(class_name="kpi-card purple"):
-                        tgb.text("📚 Utbildningsområden", class_name="kpi-label")
+                        tgb.text("Utbildningsområden", class_name="kpi-label")
                         tgb.text("{antal_utbildningsområden}", class_name="kpi-value")
 
                     with tgb.part(class_name="kpi-card orange"):
-                        tgb.text("📈 Beviljandegrad", class_name="kpi-label")
+                        tgb.text("Beviljandegrad", class_name="kpi-label")
                         tgb.text("{approved_rate}%", class_name="kpi-value")
 
             
@@ -159,7 +159,6 @@ Gui(ansökningar).run(
         "fig_bar": fig_bar,
         "fig_pie": fig_pie,
     },
-    css_file="dark_style.css",
     dark_mode=False,
     use_reloader=True,
     port=8080
