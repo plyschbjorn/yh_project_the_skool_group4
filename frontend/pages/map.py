@@ -1,4 +1,3 @@
-from taipy.gui import Gui
 import taipy.gui.builder as tgb
 from backend.map_processing import load_beviljade_per_lan
 from frontend.charts.map_charts import create_choropleth_map

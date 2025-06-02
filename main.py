@@ -6,9 +6,10 @@ from frontend.pages.ansök_kurs_omgång import ansökningar
 from frontend.pages.map import map_page, beviljade_df, choropleth_chart, selected_year
 from frontend.pages.kpi import kpi_page
 from frontend.pages.extra import extra_page
+from frontend.pages.anordnare import anordnare_page
 
 pages = {
-    "home": home_page, "studerande": dashboard_page, "kurser": ansökningar, "karta": map_page, "statsbidrag": kpi_page, "data": data_page, "_": extra_page
+    "home": home_page, "studerande": dashboard_page, "kurser": ansökningar, "karta": map_page, "statsbidrag": kpi_page, "anordnare": anordnare_page,"data": data_page, "_": extra_page
 }
 
 if __name__ == "__main__":
@@ -18,5 +19,6 @@ if __name__ == "__main__":
         choropleth_chart=choropleth_chart,
         selected_year=selected_year,
         use_reloader=True,
+        title="The Skool YH Dashboard",
         port=8080
     )
